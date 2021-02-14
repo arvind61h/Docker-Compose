@@ -1,0 +1,34 @@
+version: "3.8"
+service: 
+  webapp:
+    image:92840/webapp:v1
+    ports: 
+    - 8080:8080
+    environment:
+    - MONGO_DB_HOSTNAME=mongo
+    - MONGO_DB_USERNAME=adam
+    - MONGO_DB_PASSWORD=adam123
+    networks:
+    - app
+    depends_on: 
+    - mongo
+
+  mongo:
+    image: mongo
+    ports:
+    - 27017:27017
+    networks:
+    - app
+    volumes:
+    - mongo:/data/db
+    environment:
+    - MONGO_INITDB_ROOT_USERNAME=adam
+    - MONGO_INITDB_ROOT_PASSWORD=adam123
+volumes:
+  mongo:
+    external: true
+
+networks:
+  app:
+    external: true
+  

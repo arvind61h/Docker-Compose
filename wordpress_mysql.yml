@@ -1,0 +1,32 @@
+version: "3.2"
+services:
+  wordpress:
+    image: wordpress
+    networks:
+    - wordpress
+    ports:
+    - 80:80
+    environment:
+    - WORDPRESS_DB_HOST=mysql
+    - WORDPRESS_DB_USER=adam
+    - WORDPRESS_DB_PASSWORD=admin
+    - WORDPRESS_DB_NAME=test
+
+  mysql:
+    image: mysql
+    networks:
+    - wordpress
+    ports:
+    - 3306:3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    environment:
+    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    - MYSQL_USER=adam
+    - WORDPRESS_DB_PASSWORD=admin
+    - WORDPRESS_DB_NAME=test
+
+networks:
+  wordpress
+volumes:
+  mysql_data
