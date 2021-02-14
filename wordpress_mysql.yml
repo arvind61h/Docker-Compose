@@ -11,6 +11,8 @@ services:
     - WORDPRESS_DB_USER=adam
     - WORDPRESS_DB_PASSWORD=admin
     - WORDPRESS_DB_NAME=test
+    depends_on:
+    - mysql
 
   mysql:
     image: mysql
@@ -19,14 +21,16 @@ services:
     ports:
     - 3306:3306
     volumes:
-      - mysql_data:/var/lib/mysql
+    -  mysql_data:/var/lib/mysql
     environment:
-    - MYSQL_ALLOW_EMPTY_PASSWORD=yes
-    - MYSQL_USER=adam
+    - MYSQL_ROOT_PASSWORD=admin123
+    - MYSQL_USER=a/var/lib/mysql
     - WORDPRESS_DB_PASSWORD=admin
     - WORDPRESS_DB_NAME=test
 
 networks:
-  wordpress
+ wordpress:
+    driver: bridge
 volumes:
-  mysql_data
+ mysql_data:
+    driver: local
