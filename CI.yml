@@ -1,0 +1,47 @@
+FROM: "3.2"
+SERVICES:
+    Jenkins:
+        image: jenkins
+        networks:
+            - app
+        ports:
+            - 8080:8080
+        volumes:
+            - mydata:/var/lib/jenkins
+    sonar:
+        image: sonarqube
+        networks:
+            - app
+        ports:
+            - 9000:9000
+        volumes:
+            - sonarqube:/opt/sonarqube/logs
+            - sonarqube:/opt/sonarqube/conf
+        depends_on:
+            - db
+        environment:
+            - SONAR_JDBC_USERNAME=admin
+            - SONAR_JDBC_PASSWORD=admin
+            - SONAR_JDBC_HOSTNAME=postgres
+    postgres:
+        image: postgres
+        networks:
+            - app
+        ports:
+            - 5432:5432
+        volumes:
+            my_postgres:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_USER: admin
+            - POSTGRES_PASSWORD: admin
+                  
+NETWORKS:
+    app:
+      driver: bridge
+VOLUMES:
+    sonarqube:
+        driver: local
+    mydata:
+        driver: local
+    my_postgres:
+        driver: local
