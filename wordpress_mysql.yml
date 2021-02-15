@@ -5,7 +5,7 @@ services:
     networks:
     - wordpress
     ports:
-    - 80:80
+    - 8080:80
     environment:
     - WORDPRESS_DB_HOST=mysql
     - WORDPRESS_DB_USER=adam
@@ -23,10 +23,10 @@ services:
     volumes:
     -  mysql_data:/var/lib/mysql
     environment:
-    - MYSQL_ROOT_PASSWORD=admin123
-    - MYSQL_USER=a/var/lib/mysql
-    - WORDPRESS_DB_PASSWORD=admin
-    - WORDPRESS_DB_NAME=test
+    - MYSQL_ROOT_PASSWORD=wordpress
+    - MYSQL_USER=adam
+    - MYSQL_PASSWORD=admin
+    - MYSQL_DATABASE=test
 
 networks:
  wordpress:
